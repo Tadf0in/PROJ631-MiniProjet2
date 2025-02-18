@@ -82,6 +82,7 @@ FrequencySize count_frequency(char* filename) {
 
         fclose(file);
 
+        // Trie la liste
         qsort(fs.array, fs.size, sizeof(Frequency), compare_frequency);
     }
     
