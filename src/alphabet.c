@@ -1,3 +1,5 @@
+#include "alphabet.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,14 +23,5 @@ char* read_file(char* filename) {
 
         fclose(file);
         return content;
-    }
-}
-
-
-int main() {
-    char* content = read_file("data/textesimple.txt");
-    if (content != NULL) {
-        printf("%s\n", content);
-        free(content);
     }
 }
