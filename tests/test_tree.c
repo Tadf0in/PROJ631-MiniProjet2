@@ -7,21 +7,11 @@
 int main() {
     printf("\n====================================\nDébut test_tree\n====================================\n");
     
-    FrequencySize fs = count_frequency("data/textesimple.txt");
-    
-    // Créé un tableau d'arbres avec 1 arbre = 1 noeud = 1 caractère 
-    Tree* trees = (Tree*) malloc(fs.size * sizeof(Tree));
-    for (int i=0; i<fs.size; i++) {
-        trees[i].character = fs.array[i].character;
-        trees[i].left = NULL;
-        trees[i].right = NULL;
-        trees[i].freq = fs.array[i].count;
-    }
-    free(fs.array); // On peut libérer la mémoire, on en a plus besoin
-    int trees_size = fs.size;
+    printf("Texte simple :\n");
+    make_tree("data/textesimple.txt");
 
-    int smallest = get_smallest_tree(trees, trees_size);
-    printf("%c", trees[smallest].character);
+    printf("\nAlice :\n");
+    make_tree("data/alice.txt");
 
     printf("\n====================================\ntest_tree OK\n====================================\n");
 

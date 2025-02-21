@@ -9,7 +9,7 @@ typedef struct Tree_s {
 } Tree;
 
 int get_smallest_tree(Tree* trees, int trees_size);
-void remove_element(Tree** trees, int* trees_size, int remove_index);
-void make_tree(char* filename);
+Tree remove_element(Tree** trees, int* trees_size, int remove_index);
+Tree make_tree(char* filename);
 
 #endif

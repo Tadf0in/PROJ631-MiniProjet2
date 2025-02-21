@@ -11,7 +11,7 @@
  * @param size Taille du tableau
  * @param c Caractère à chercher
  * 
- * @return Indice du caractère dans le tableau, -1 si pas présent
+ * @return int Indice du caractère dans le tableau, -1 si pas présent
  */
 int find_char(Frequency* array, int size, char c) {
     for (int i = 0; i < size; i++) {
@@ -29,7 +29,7 @@ int find_char(Frequency* array, int size, char c) {
  * @param a Caractère 1
  * @param b Caractère 2
  * 
- * @return Une entier < 0 si a avant b, > 0 sinon
+ * @return Un entier < 0 si a avant b, > 0 sinon
  */
 int compare_frequency(const void* a, const void* b) {
     Frequency* freq_a = (Frequency*)a;
@@ -50,6 +50,8 @@ int compare_frequency(const void* a, const void* b) {
  * Compte la fréquence d'apparition de chaque caractère dans le texte
  * 
  * @param filename Chemin vers le fichier texte
+ * 
+ * @return FrequencySize Structure contenant le tableau de fréquences et sa taille
  */
 FrequencySize count_frequency(char* filename) {
     FILE* file = fopen(filename, "r");

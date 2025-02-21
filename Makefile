@@ -1,7 +1,7 @@
 # Variables
 CC = gcc
 CFLAGS = -Wall -Wextra -I.\src -std=gnu99
-SRC = src/alphabet.c
+SRC = src/alphabet.c src/tree.c
 OBJ = $(SRC:.c=.exe)
 
 # Targets
