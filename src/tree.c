@@ -48,7 +48,7 @@ Tree remove_element(Tree** trees, int* trees_size, int remove_index) {
  * 
  * @param filename Chemin vers le fichier 
  * 
- * @return Tree L'arbre de Huffman
+ * @return Tree L'abre de Huffman
  */
 Tree make_tree(char* filename) {
     FrequencySize fs = count_frequency(filename);
@@ -60,6 +60,7 @@ Tree make_tree(char* filename) {
         trees[i].left = NULL;
         trees[i].right = NULL;
         trees[i].freq = fs.array[i].count;
+        trees[i].size = 1;
     }
     free(fs.array); // On peut libérer la mémoire, on en a plus besoin
 
@@ -67,20 +68,24 @@ Tree make_tree(char* filename) {
     while (trees_size > 1) {
         // Récupère l'arbre le plus petit
         int index_min_tree1 = get_smallest_tree(trees, trees_size);
-        Tree min_tree1 = remove_element(&trees, &trees_size, index_min_tree1);
+        Tree* min_tree1 = malloc(sizeof(Tree));
+        *min_tree1 = remove_element(&trees, &trees_size, index_min_tree1);
         
         // Récupère le deuxième arbre le plus petit
         int index_min_tree2 = get_smallest_tree(trees, trees_size);
-        Tree min_tree2 = remove_element(&trees, &trees_size, index_min_tree2);
+        Tree* min_tree2 = malloc(sizeof(Tree));
+        *min_tree2 = remove_element(&trees, &trees_size, index_min_tree2);
 
         // Combine les 2 dans un nouvel arbre
         Tree combined;
         combined.character = '\0';
-        combined.left = &min_tree1;
-        combined.right = &min_tree2;
-        combined.freq = min_tree1.freq + min_tree2.freq;
+        combined.left = min_tree1;
+        combined.right = min_tree2;
+        combined.freq = min_tree1->freq + min_tree2->freq;
+        combined.size = min_tree1->size + min_tree2->size + 1;
 
-        printf("%d %d %d, ", trees_size, min_tree1.freq, min_tree2.freq);
+        printf("%d %d %c %d %c\n", trees_size, min_tree1->freq, min_tree1->character, min_tree2->freq, min_tree2->character);
+        printf("combined : %c %d %c %c\n", combined.character, combined.freq, combined.left->character, combined.right->character);
 
         // Ajoute le nouvel arbre dans la liste d'arbres
         trees_size++;
@@ -92,3 +97,25 @@ Tree make_tree(char* filename) {
     return trees[0];
 }
 
+
+// /**
+//  * Affiche l'arbre de Huffman
+//  * 
+//  * @param tree Arbre de Huffman
+//  * @param depth Profondeur actuelle de l'arbre
+//  */
+// void affiche_tree(Tree tree, int depth) {
+//     // Si une feuille
+//     if (tree.left == NULL && tree.right == NULL) {
+//         printf("[char: %c, freq: %d]\n", tree.character, tree.freq);
+//         return;
+//     }
+
+//     printf("freq:%d left:%c right:%c\n", tree.freq, tree.left->character, tree.right->character);
+
+//     // Affiche le sous arbre droit
+//     affiche_tree(*tree.right, depth + 1);
+
+//     // Affiche le sous arbre gauche
+//     affiche_tree(*tree.left, depth + 1);
+// }

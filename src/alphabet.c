@@ -56,7 +56,7 @@ int compare_frequency(const void* a, const void* b) {
 FrequencySize count_frequency(char* filename) {
     FILE* file = fopen(filename, "r");
 
-    // Initialise le tableau
+    // Initialise la structure
     FrequencySize fs;
     fs.array = NULL;
     fs.size = 0;
@@ -88,6 +88,5 @@ FrequencySize count_frequency(char* filename) {
         qsort(fs.array, fs.size, sizeof(Frequency), compare_frequency);
     }
     
-    // free(fs.array);
     return fs;
 }
