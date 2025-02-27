@@ -7,6 +7,10 @@
 int main() {
     printf("\n====================================\nDébut test_parcours\n====================================\n");
     
+    printf("This :\n");
+    Tree t = make_tree("data/this.txt");
+    parcours_tree_wrapper(t);
+
     printf("Texte simple :\n");
     Tree ts = make_tree("data/textesimple.txt");
     parcours_tree_wrapper(ts);

@@ -66,26 +66,26 @@ Tree make_tree(char* filename) {
 
     int trees_size = fs.size;
     while (trees_size > 1) {
-        // Récupère l'arbre le plus petit
-        int index_min_tree1 = get_smallest_tree(trees, trees_size);
-        Tree* min_tree1 = malloc(sizeof(Tree));
-        *min_tree1 = remove_element(&trees, &trees_size, index_min_tree1);
         
-        // Récupère le deuxième arbre le plus petit
-        int index_min_tree2 = get_smallest_tree(trees, trees_size);
-        Tree* min_tree2 = malloc(sizeof(Tree));
-        *min_tree2 = remove_element(&trees, &trees_size, index_min_tree2);
-
+        
         // Combine les 2 dans un nouvel arbre
         Tree combined;
         combined.character = '\0';
-        combined.left = min_tree1;
-        combined.right = min_tree2;
-        combined.freq = min_tree1->freq + min_tree2->freq;
-        combined.size = min_tree1->size + min_tree2->size + 1;
+        
+        // Récupère l'arbre le plus petit
+        int index_min_tree1 = get_smallest_tree(trees, trees_size);
+        combined.left = (Tree*)malloc(sizeof(Tree));
+        *combined.left = remove_element(&trees, &trees_size, index_min_tree1);
+        
+        // Récupère le deuxième arbre le plus petit
+        int index_min_tree2 = get_smallest_tree(trees, trees_size);
+        combined.right = (Tree*) malloc(sizeof(Tree));
+        *combined.right = remove_element(&trees, &trees_size, index_min_tree2);
+        
+        combined.freq = combined.left->freq + combined.right->freq;
+        combined.size = combined.left->size + combined.right->size + 1;
 
-        printf("%d %d %c %d %c\n", trees_size, min_tree1->freq, min_tree1->character, min_tree2->freq, min_tree2->character);
-        printf("combined : %c %d %c %c\n", combined.character, combined.freq, combined.left->character, combined.right->character);
+        // printf("combined : %c %d %c %c\n", combined.character, combined.freq, combined.left->character, combined.right->character);
 
         // Ajoute le nouvel arbre dans la liste d'arbres
         trees_size++;
