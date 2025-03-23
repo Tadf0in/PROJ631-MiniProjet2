@@ -7,13 +7,14 @@
 int main() {
     printf("\n====================================\nDébut test_encode\n====================================\n");
     
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         printf("\n - %s\n", printnames[i]);
         int* compressed = NULL;
         int size = compress_file(filenames[i], &compressed);
         for (int i=0; i<size; i++) {
             printf("%d", compressed[i]);
         }
+        encode(filenames[i]);
     }
 
     // int* compressed = NULL;

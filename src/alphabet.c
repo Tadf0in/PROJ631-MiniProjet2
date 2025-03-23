@@ -41,7 +41,7 @@ int compare_frequency(const void* a, const void* b) {
     } 
     // Sinon tri par fréquence
     else {
-        return freq_b->count - freq_a->count;
+        return freq_a->count - freq_b->count;
     }
 }
 

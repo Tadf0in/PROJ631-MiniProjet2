@@ -39,7 +39,6 @@ int compress_file(char* filename, int** out) {
         }
         fclose(file);
     }
-
     free_paths(paths, tree->nb_leaves);
     free_tree(tree);
     
@@ -47,58 +46,73 @@ int compress_file(char* filename, int** out) {
 }
 
 
-void write_comp(char* filename) {
-    int* compressed = NULL;
-    compress_file(filename, &compressed);
+char* get_file_name(char* filename) {
+    // Enleve le 'data/'
+    char* name = strrchr(filename, '/');
+    if (name != NULL) {
+        name++;
+    } else {
+        name = filename;
+    }
+    
+    // Enleve le '.txt'
+    char* dot = strrchr(name, '.');
+    if (dot != NULL) {
+        int len = dot - name;
+        char* temp = (char*) malloc((len + 1) * sizeof(char));
+        if (temp != NULL) {
+            strncpy(temp, name, len);
+            temp[len] = '\0';
+            name = temp;
+        }
+    }
+    return name;
 }
 
 
-/**
- * Fonction qui écrit dans un fichier selon le codage de Huffman
- * 
- * @param output_filename Nom du fichier de sortie
- */
-// void encode_file(char* filename) {
-//     Tree tree = make_tree(filename);
+void write_comp(char* filename) {
+    int* compressed = NULL;
+    int size = compress_file(filename, &compressed);
 
-//     // Obtenir les chemins pour chaque caractère
-//     Path* paths = parcours_tree_wrapper(tree);
+    char output_filename[256];
+    char* name = get_file_name(filename);
+    snprintf(output_filename, sizeof(output_filename), "out/%s_comp.bin", name);
+    printf("\noutfilename : %s\n", output_filename);
 
-//     // Ouvrir le fichier d'entrée
-//     FILE* input_file = fopen(input_filename, "r");
-//     if (input_file == NULL) {
-//         perror("Erreur lors de l'ouverture du fichier d'entrée");
-//         free(paths);
-//         return;
-//     }
+    FILE* output_file = fopen(output_filename, "wb");
+    if (output_file == NULL) {
+        perror("Erreur lors de l'ouverture du fichier de sortie");
+    } else {        
+        unsigned char buffer = 0;
+        int bit_count = 0;
 
-//     // Ouvrir le fichier de sortie
-//     FILE* output_file = fopen(output_filename, "wb");
-//     if (output_file == NULL) {
-//         perror("Erreur lors de l'ouverture du fichier de sortie");
-//         fclose(input_file);
-//         free(paths);
-//         return;
-//     }
+        for (int i = 0; i < size; i++) {
+            // Ajoute le bit de poids faible à la suite buffer
+            buffer = (buffer << 1) | (compressed[i] & 1); 
+            bit_count++;
 
-//     // Lire le fichier d'entrée et encoder les caractères
-//     int c;
-//     while ((c = fgetc(input_file)) != EOF) {
-//         for (int i = 0; i < tree->nb_leaves; i++) {
-//             if (paths[i].character == c) {
-//                 for (int j = 0; j < paths[i].size; j++) {
-//                     fputc(paths[i].path[j] + '0', output_file); // Écrire les bits sous forme de caractères
-//                 }
-//                 break;
-//             }
-//         }
-//     }
+            // Dès qu'on octet est rempli, on l'écrit dans le fichier puis on reset le buffer
+            if (bit_count == 8) {
+                printf("buffer : %d\n", buffer);
+                fwrite(&buffer, sizeof(unsigned char), 1, output_file);
+                buffer = 0;
+                bit_count = 0;
+            }
+        }
 
-//     // Libérer la mémoire et fermer les fichiers
-//     for (int i = 0; i < tree->nb_leaves; i++) {
-//         free(paths[i].path);
-//     }
-//     free(paths);
-//     fclose(input_file);
-//     fclose(output_file);
-// }
+        // A la fin si on rempli le dernier octet avec des 0
+        if (bit_count > 0) {
+            buffer = buffer << (8 - bit_count);
+            printf("buffer : %d\n", buffer);
+            fwrite(&buffer, sizeof(unsigned char), 1, output_file);
+        }
+
+        fclose(output_file);
+    }
+    free(compressed);
+}
+
+
+void encode(char* filename) {
+    write_comp(filename);
+}
