@@ -22,6 +22,22 @@ void free_tree(Tree* tree) {
     }
 }
 
+/**
+ * Libère la mémoire des chemins
+ * 
+ * @param paths Tableau des chemins à libérer
+ * @param nb_paths Nombre de chemins dans le tableau
+ */
+void free_paths(Path* paths, int nb_paths) {
+    for (int i = 0; i < nb_paths; i++) {
+        if (paths[i].path != NULL) {
+            free(paths[i].path);
+            paths[i].path = NULL;
+        }
+    }
+    free(paths);
+}
+
 
 /**
  * Parcours l'arbre de Huffman pour obtenir les chemins de chaque feuille
@@ -35,7 +51,7 @@ void free_tree(Tree* tree) {
 void parcours_tree(Tree* tree, int* path, int depth, Path** paths, int* nb_feuiles_parcourues) {
     // Si une feuille
     if (tree->left == NULL && tree->right == NULL) {
-        printf("Parcours : %c %d\n", tree->character, tree->character);
+        // printf("Parcours : %c %d\n", tree->character, tree->character);
         (*paths)[*nb_feuiles_parcourues].character = tree->character;
         (*paths)[*nb_feuiles_parcourues].size = depth;
         (*paths)[*nb_feuiles_parcourues].path = (int*) malloc(depth * sizeof(int));
@@ -81,13 +97,13 @@ Path* parcours_tree_wrapper(Tree* tree) {
     }
     free_tree(tree);
 
-    for (int i=0; i<tree->nb_leaves; i++) {
-        printf("char: %c (ascii %d), path: ", paths[i].character, paths[i].character);
-        for (int j = 0; j<paths[i].size; j++) {
-            printf("%d", paths[i].path[j]);
-        }
-        printf(", size: %d, freq: %d\n", paths[i].size, paths[i].freq);
-    }
+    // for (int i=0; i<tree->nb_leaves; i++) {
+    //     printf("char: %c (ascii %d), path: ", paths[i].character, paths[i].character);
+    //     for (int j = 0; j<paths[i].size; j++) {
+    //         printf("%d", paths[i].path[j]);
+    //     }
+    //     printf(", size: %d, freq: %d\n", paths[i].size, paths[i].freq);
+    // }
 
     return paths;
 }

@@ -7,7 +7,7 @@
 int main() {
     printf("\n====================================\nDébut test_count\n====================================\n");
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         printf("%s\n", printnames[i]);
         FrequencySize fs1 = count_frequency(filenames[i]);
         for (int i = 0; i < fs1.size; i++) {
