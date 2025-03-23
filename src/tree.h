@@ -1,6 +1,8 @@
 #ifndef TREE
 #define TREE
 
+#include "alphabet.h"
+
 typedef struct Tree_s {
     char character;
     struct Tree_s* left;

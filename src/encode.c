@@ -1,4 +1,4 @@
-#include "parcours.h"
+#include "encode.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -77,7 +77,7 @@ void write_comp(char* filename) {
     char output_filename[256];
     char* name = get_file_name(filename);
     snprintf(output_filename, sizeof(output_filename), "out/%s_comp.bin", name);
-    printf("\noutfilename : %s\n", output_filename);
+    printf("\nbin filename : %s\n", output_filename);
 
     FILE* output_file = fopen(output_filename, "wb");
     if (output_file == NULL) {
@@ -113,6 +113,29 @@ void write_comp(char* filename) {
 }
 
 
+void write_freq(char* filename) {
+    FrequencySize fs = count_frequency(filename);
+    char output_filename[256];
+    char* name = get_file_name(filename);
+    snprintf(output_filename, sizeof(output_filename), "out/%s_freq.txt", name);
+    printf("\ntxt filename : %s\n", output_filename);
+
+    FILE* output_file = fopen(output_filename, "w");
+    if (output_file == NULL) {
+        perror("Erreur lors de l'ouverture du fichier de sortie");
+    } else {
+        fprintf(output_file, "%d\n", fs.size);
+        for (int i = 0; i < fs.size-1; i++) {
+            fprintf(output_file, "%c : %d\n", fs.array[i].character, fs.array[i].count);
+        }
+        fprintf(output_file, "%c : %d", fs.array[fs.size-1].character, fs.array[fs.size-1].count); // Derniere ligne sans \n
+        fclose(output_file);
+    }
+    free(fs.array);
+}
+
+
 void encode(char* filename) {
     write_comp(filename);
+    write_freq(filename);
 }
