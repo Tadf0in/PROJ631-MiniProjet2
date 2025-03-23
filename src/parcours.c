@@ -19,6 +19,7 @@ void free_tree(Tree* tree) {
     }
     if (tree != NULL) {
         free(tree);
+        tree = NULL;
     }
 }
 
@@ -36,6 +37,7 @@ void free_paths(Path* paths, int nb_paths) {
         }
     }
     free(paths);
+    paths = NULL;
 }
 
 
@@ -89,13 +91,10 @@ Path* parcours_tree_wrapper(Tree* tree) {
     int* path = (int*) malloc((tree->nb_leaves) * sizeof(int));
     int nb_feuilles_parcourues = 0;
     parcours_tree(tree, path, 0, &paths, &nb_feuilles_parcourues);
-    
+
     // Libère la mémoire
-    if (path != NULL) {
-        free(path);
-        path = NULL;
-    }
-    free_tree(tree);
+    free(path);
+    path = NULL;
 
     // for (int i=0; i<tree->nb_leaves; i++) {
     //     printf("char: %c (ascii %d), path: ", paths[i].character, paths[i].character);

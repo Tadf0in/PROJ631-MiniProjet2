@@ -7,8 +7,9 @@
 int main() {
     printf("\n====================================\nDébut test_tree\n====================================\n");
     
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         printf("%s\n", printnames[i]);
+        // fs = c
         make_tree(filenames[i]);
     }
 

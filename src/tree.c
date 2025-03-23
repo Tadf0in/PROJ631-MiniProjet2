@@ -51,7 +51,7 @@ Tree remove_element(Tree** trees, int* trees_size, int remove_index) {
  * @return Tree L'abre de Huffman
  */
 Tree make_tree(char* filename) {
-    FrequencySize fs = count_frequency(filename);
+    FrequencySize fs = count_frequency(filename); // X
     
     // Créé un tableau d'arbres avec 1 arbre = 1 noeud = 1 caractère 
     Tree* trees = (Tree*) malloc(fs.size * sizeof(Tree));
