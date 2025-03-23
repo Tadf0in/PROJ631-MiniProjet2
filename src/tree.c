@@ -61,6 +61,7 @@ Tree make_tree(char* filename) {
         trees[i].right = NULL;
         trees[i].freq = fs.array[i].count;
         trees[i].size = 1;
+        trees[i].nb_leaves = 1;
     }
     free(fs.array); // On peut libérer la mémoire, on en a plus besoin
 
@@ -83,6 +84,7 @@ Tree make_tree(char* filename) {
         
         combined.freq = combined.left->freq + combined.right->freq;
         combined.size = combined.left->size + combined.right->size + 1;
+        combined.nb_leaves = combined.left->nb_leaves + combined.right->nb_leaves;
 
         // printf("combined : %c %d %c %c\n", combined.character, combined.freq, combined.left->character, combined.right->character);
 

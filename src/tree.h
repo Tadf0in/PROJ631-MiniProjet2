@@ -7,6 +7,7 @@ typedef struct Tree_s {
     struct Tree_s* right;
     int freq;
     int size;
+    int nb_leaves;
 } Tree;
 
 int get_smallest_tree(Tree* trees, int trees_size);

@@ -11,7 +11,7 @@ int main() {
     for (int i = 0; i < 4; i++) {
         printf("\n - %s\n", printnames[i]);
         Tree t = make_tree(filenames[i]);
-        Path* paths = parcours_tree_wrapper(&t);
+        parcours_tree_wrapper(&t);
     }
 
     printf("\n====================================\ntest_parcours OK\n====================================\n");
