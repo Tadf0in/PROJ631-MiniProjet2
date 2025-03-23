@@ -22,6 +22,15 @@ int main() {
             printf(", size: %d, freq: %d\n", paths[i].size, paths[i].freq);
         }
 
+        float sum_freq = 0;
+        float sum_size = 0;
+        for (int i=0; i<size; i++) {
+            sum_size += paths[i].size * paths[i].freq;
+            sum_freq += paths[i].freq;
+        } 
+        float mean = sum_size / sum_freq;
+        printf("Moyenne : %.2f bits par caratère\n", mean);
+
         free_paths(paths, size);
     }
 

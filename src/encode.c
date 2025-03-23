@@ -166,6 +166,7 @@ void compare_file_sizes(char* original_filename, char* compressed_filename, char
     }
 }
 
+
 void encode(char* filename) {
     char* name = get_file_name(filename);
 
