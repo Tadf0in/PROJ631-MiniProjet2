@@ -2,22 +2,17 @@
 #include "../src/parcours.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "./list_tests.h"
 
 
 int main() {
     printf("\n====================================\nDébut test_parcours\n====================================\n");
     
-    printf("This :\n");
-    Tree t = make_tree("data/this.txt");
-    parcours_tree_wrapper(t);
-
-    printf("Texte simple :\n");
-    Tree ts = make_tree("data/textesimple.txt");
-    parcours_tree_wrapper(ts);
-
-    printf("\nAlice :\n");
-    Tree a = make_tree("data/alice.txt");
-    parcours_tree_wrapper(a);
+    for (int i = 0; i < 4; i++) {
+        printf("%s\n", printnames[i]);
+        Tree t = make_tree(filenames[i]);
+        parcours_tree_wrapper(t);
+    }
 
     printf("\n====================================\ntest_parcours OK\n====================================\n");
 

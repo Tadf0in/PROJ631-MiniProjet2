@@ -1,19 +1,16 @@
 #include "../src/tree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "./list_tests.h"
 
 
 int main() {
     printf("\n====================================\nDébut test_tree\n====================================\n");
     
-    printf("This :\n");
-    make_tree("data/this.txt");
-
-    printf("Texte simple :\n");
-    make_tree("data/textesimple.txt");
-
-    printf("\nAlice :\n");
-    make_tree("data/alice.txt");
+    for (int i = 0; i < 4; i++) {
+        printf("%s\n", printnames[i]);
+        make_tree(filenames[i]);
+    }
 
     printf("\n====================================\ntest_tree OK\n====================================\n");
 
