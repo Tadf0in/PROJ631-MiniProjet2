@@ -3,7 +3,6 @@
 
 #include "tree.h"
 
-
 typedef struct {
     char character;
     int* path;
