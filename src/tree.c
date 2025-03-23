@@ -67,14 +67,13 @@ Tree make_tree(char* filename) {
     int trees_size = fs.size;
     while (trees_size > 1) {
         
-        
         // Combine les 2 dans un nouvel arbre
         Tree combined;
         combined.character = '\0';
         
         // Récupère l'arbre le plus petit
         int index_min_tree1 = get_smallest_tree(trees, trees_size);
-        combined.left = (Tree*)malloc(sizeof(Tree));
+        combined.left = (Tree*) malloc(sizeof(Tree));
         *combined.left = remove_element(&trees, &trees_size, index_min_tree1);
         
         // Récupère le deuxième arbre le plus petit
