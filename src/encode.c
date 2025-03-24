@@ -117,9 +117,9 @@ void write_freq(char* filename, char* output_filename) {
     } else {
         fprintf(output_file, "%d\n", fs.size);
         for (int i = 0; i < fs.size-1; i++) {
-            fprintf(output_file, "%c : %d\n", fs.array[i].character, fs.array[i].count);
+            fprintf(output_file, "%c %d\n", fs.array[i].character, fs.array[i].count);
         }
-        fprintf(output_file, "%c : %d", fs.array[fs.size-1].character, fs.array[fs.size-1].count); // Derniere ligne sans \n
+        fprintf(output_file, "%c %d", fs.array[fs.size-1].character, fs.array[fs.size-1].count); // Derniere ligne sans \n
         fclose(output_file);
     }
     free(fs.array);
